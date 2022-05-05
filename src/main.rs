@@ -35,4 +35,14 @@ fn main() {
             return
         }
     }
+
+    // Test
+
+    let response = cache.get("gateway.local");
+
+    if let Some(target_address) = response {
+        println!("gateway.local is at {}.{}.{}.{}", target_address.address[0], target_address.address[1], target_address.address[2], target_address.address[3]);
+    } else {
+        println!("gateway.local not found")
+    }
 }
