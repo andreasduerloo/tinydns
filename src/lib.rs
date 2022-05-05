@@ -48,6 +48,7 @@ pub mod cache {
             }
         }
     }
+    // Getting a record -> Option (if let, Some(), None)
 }
 
 pub mod ip {
