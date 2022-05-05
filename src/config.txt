@@ -1,0 +1,6 @@
+FORWARD 1.1.1.1
+localhost 127.0.0.1
+gateway.local 192.168.1.1
+toolong.local 192.168.1.1.1
+notau8.local 192.300.ABC.1
+#comment 192.168.0.1
