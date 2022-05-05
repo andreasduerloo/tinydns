@@ -13,6 +13,7 @@ pub mod cache {
 }
 
 pub mod ip {
+
     pub struct IPv4 {
         pub address: [u8; 4],
     }
@@ -26,7 +27,7 @@ pub mod ip {
     }
 
     impl IPv4 {
-        pub fn new_from_str(ip_string: &str) -> Option<IPv4> {
+        pub fn new_from_str(ip_string: &str) -> Result<IPv4, &str> {
             let ip_vec: Vec<&str> = ip_string.split(".").collect();
 
             match ip_vec.len() {
@@ -34,13 +35,22 @@ pub mod ip {
                     let mut octets: [u8; 4] = [0; 4];
 
                     for octet in 0..4 {
-                        *&mut octets[octet] = u8::from_str_radix(ip_vec[octet], 10).expect("Unable to store IP adress: octet is not a u8")
+                        let current_octet = u8::from_str_radix(ip_vec[octet], 10);
+
+                        match current_octet {
+                            Ok(valid_octet) => {
+                                *&mut octets[octet] = valid_octet;
+                            },
+                            Err(_) => {
+                                return Err("Invalid octet");
+                            }
+                        }
                     }
 
                     let out_ip: IPv4 = IPv4::new(octets);
-                    Some(out_ip)
+                    Ok(out_ip)
                 },
-                _ => None
+                _ => Err("Invalid IPv4")
             }
         }
     }
